@@ -136,6 +136,41 @@ class AuthProvider with ChangeNotifier {
     return false;
   }
 
+  Future<bool> register({
+    required String fullname,
+    required String phone,
+    required String password,
+    String idCard = '',
+    String vehicleModel = '',
+    String vehiclePlate = '',
+    String expertise = '',
+  }) async {
+    _status = AuthStatus.loading;
+    _errorMessage = '';
+    notifyListeners();
+
+    final response = await _api.post(ApiConfig.register, body: {
+      'fullname': fullname,
+      'phone': phone,
+      'password': password,
+      'id_card': idCard,
+      'vehicle_model': vehicleModel,
+      'vehicle_plate': vehiclePlate,
+      'expertise': expertise,
+    });
+
+    if (response.success) {
+      _status = AuthStatus.unauthenticated;
+      notifyListeners();
+      return true;
+    }
+
+    _errorMessage = response.message;
+    _status = AuthStatus.error;
+    notifyListeners();
+    return false;
+  }
+
   Future<bool> setOnlineStatus(bool online) async {
     final response = await _api.post(ApiConfig.setOnlineStatus, body: {'is_online': online ? 1 : 0});
     if (response.success) {

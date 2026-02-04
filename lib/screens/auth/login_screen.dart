@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../config/theme.dart';
 import '../home/home_screen.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -114,6 +115,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                         : const Text('เข้าสู่ระบบ'),
                   ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('ยังไม่มีบัญชี? '),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (_) => const RegisterScreen()),
+                      ),
+                      child: const Text('สมัครเป็นช่าง'),
+                    ),
+                  ],
                 ),
               ],
             ),
